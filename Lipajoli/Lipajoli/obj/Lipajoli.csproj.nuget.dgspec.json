@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\babti\\source\\repos\\Lipajoli\\Lipajoli\\Lipajoli.csproj": {}
+    "C:\\Users\\Barka\\Downloads\\s3\\pooIII\\Poo3_TP3\\Lipajoli\\Lipajoli\\Lipajoli.csproj": {}
   },
   "projects": {
-    "C:\\Users\\babti\\source\\repos\\Lipajoli\\Lipajoli\\Lipajoli.csproj": {
+    "C:\\Users\\Barka\\Downloads\\s3\\pooIII\\Poo3_TP3\\Lipajoli\\Lipajoli\\Lipajoli.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\babti\\source\\repos\\Lipajoli\\Lipajoli\\Lipajoli.csproj",
+        "projectUniqueName": "C:\\Users\\Barka\\Downloads\\s3\\pooIII\\Poo3_TP3\\Lipajoli\\Lipajoli\\Lipajoli.csproj",
         "projectName": "Lipajoli",
-        "projectPath": "C:\\Users\\babti\\source\\repos\\Lipajoli\\Lipajoli\\Lipajoli.csproj",
-        "packagesPath": "C:\\Users\\babti\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\babti\\source\\repos\\Lipajoli\\Lipajoli\\obj\\",
+        "projectPath": "C:\\Users\\Barka\\Downloads\\s3\\pooIII\\Poo3_TP3\\Lipajoli\\Lipajoli\\Lipajoli.csproj",
+        "packagesPath": "C:\\Users\\Barka\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Barka\\Downloads\\s3\\pooIII\\Poo3_TP3\\Lipajoli\\Lipajoli\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\babti\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Barka\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -39,21 +43,12 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "dependencies": {
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[8.0.19, )"
-            },
-            "Microsoft.EntityFrameworkCore.Sqlite": {
-              "target": "Package",
-              "version": "[8.0.19, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -73,7 +68,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
