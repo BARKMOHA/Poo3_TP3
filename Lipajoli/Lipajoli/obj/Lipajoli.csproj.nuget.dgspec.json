@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\babti\\source\\repos\\Lipajoli\\Lipajoli\\Lipajoli.csproj": {}
+    "C:\\Users\\babti\\Downloads\\Limoilou\\Poo3_TP3\\Lipajoli\\Lipajoli\\Lipajoli.csproj": {}
   },
   "projects": {
-    "C:\\Users\\babti\\source\\repos\\Lipajoli\\Lipajoli\\Lipajoli.csproj": {
+    "C:\\Users\\babti\\Downloads\\Limoilou\\Poo3_TP3\\Lipajoli\\Lipajoli\\Lipajoli.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\babti\\source\\repos\\Lipajoli\\Lipajoli\\Lipajoli.csproj",
+        "projectUniqueName": "C:\\Users\\babti\\Downloads\\Limoilou\\Poo3_TP3\\Lipajoli\\Lipajoli\\Lipajoli.csproj",
         "projectName": "Lipajoli",
-        "projectPath": "C:\\Users\\babti\\source\\repos\\Lipajoli\\Lipajoli\\Lipajoli.csproj",
+        "projectPath": "C:\\Users\\babti\\Downloads\\Limoilou\\Poo3_TP3\\Lipajoli\\Lipajoli\\Lipajoli.csproj",
         "packagesPath": "C:\\Users\\babti\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\babti\\source\\repos\\Lipajoli\\Lipajoli\\obj\\",
+        "outputPath": "C:\\Users\\babti\\Downloads\\Limoilou\\Poo3_TP3\\Lipajoli\\Lipajoli\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\babti\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -45,11 +45,13 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.EntityFrameworkCore": {
+            "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
               "version": "[8.0.19, )"
             },
-            "Microsoft.EntityFrameworkCore.Sqlite": {
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.19, )"
             }
