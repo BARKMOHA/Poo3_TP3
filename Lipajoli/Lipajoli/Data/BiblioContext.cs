@@ -35,8 +35,7 @@ namespace Lipajoli.Data
             modelBuilder.Entity<Livre>()
                 .HasOne(b => b.Categorie)
                 .WithMany(c => c.Livres)
-                .HasForeignKey(b => b.NomCategorie)
-                .HasPrincipalKey(c => c.Nom);
+                .HasForeignKey(b => b.CategorieId);
 
             // Contraindre Code à être unique
             modelBuilder.Entity<Livre>()

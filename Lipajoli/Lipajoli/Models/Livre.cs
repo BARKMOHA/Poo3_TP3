@@ -9,7 +9,7 @@
         public string? Titre { get; set; }
         public List<LivreAuteur>? LivreAuteurs { get; set; } 
         public CategorieLivre? Categorie { get; set; }
-        public string? NomCategorie  { get; set; }        // FK vers nomCategorie
+        public int CategorieId  { get; set; }        
 
         public int Quantite { get; set; }
         public decimal Prix { get; set; }
