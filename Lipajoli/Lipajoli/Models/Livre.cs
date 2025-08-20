@@ -2,12 +2,15 @@
 {
     public class Livre
     {
+        public int Id { get; set; }
         public string? CodeUnique { get; set; }  
         public string? ISBN10 { get; set; }      
         public string? ISBN13 { get; set; }      
         public string? Titre { get; set; }
-        public ICollection<Auteur> Auteurs { get; set; } = new List<Auteur>();
+        public List<LivreAuteur>? LivreAuteurs { get; set; } 
         public CategorieLivre? Categorie { get; set; }
+        public string? NomCategorie  { get; set; }        // FK vers nomCategorie
+
         public int Quantite { get; set; }
         public decimal Prix { get; set; }
     }
