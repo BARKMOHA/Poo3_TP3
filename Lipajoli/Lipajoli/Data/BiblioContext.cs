@@ -1,6 +1,10 @@
-﻿namespace Lipajoli.Data
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Lipajoli.Data
 {
-    public class BiblioContext
+    public class BiblioContext : DbContext
     {
+
+        
     }
 }
