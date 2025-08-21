@@ -16,23 +16,25 @@ namespace Lipajoli.Service
 
             public async Task<string> GenererCodeAsync(int categorieId)
             {
-            // 1. Récupérer la catégorie
-            var category = await _context.Categories
+                var category = await _context.Categories
+               
                 .FirstOrDefaultAsync(c => c.Id == categorieId);
 
-            if (category == null)
-                throw new ArgumentException("Catégorie inconnue.");
+                if (category == null)
+                    throw new Exception("Catégorie introuvable.");
 
-            var categoryCode = category.Code;
+                string prefix = category.Nom.Length >= 3
+                    ? category.Nom.Substring(0, 3).ToUpper()
+                    : category.Nom.ToUpper().PadRight(3, 'X'); 
 
-            // 2. Compter les livres existants pour cette catégorie
-            var count = await _context.Livres
-                .CountAsync(b => b.CategorieId == categorieId);
+                // Compter combien de livres existent déjà avec ce préfixe
+                int count = await _context.Livres
+                    .CountAsync(b => b.CodeUnique.StartsWith(prefix));
 
-            // 3. Générer le code : "LIT001", "SCI002", etc.
-            var bookCode = $"{categoryCode}{(count + 1):D3}";
+                // Incrémenter et formater : INF001, INF002
+                string code = $"{prefix}{(count + 1):D3}";
 
-            return bookCode;
+                return code;
         }
     }
         

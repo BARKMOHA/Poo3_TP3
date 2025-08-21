@@ -7,24 +7,62 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Lipajoli.Data;
 using Lipajoli.Models;
+using Lipajoli.Interface;
 
 namespace Lipajoli.Controllers
 {
     public class LivresController : Controller
     {
         private readonly BiblioContext _context;
-
-        public LivresController(BiblioContext context)
+        private readonly IGenerateurCodeLivre _generateurCode;
+        public LivresController(BiblioContext context, IGenerateurCodeLivre generateurCode)
         {
             _context = context;
+            _generateurCode = generateurCode;
         }
 
         // GET: Livres
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, string categoryFilter, string authorFilter, string sortOrder)
         {
-            var biblioContext = _context.Livres.Include(l => l.Categorie);
-            return View(await biblioContext.ToListAsync());
+            var livres = _context.Livres
+                .Include(b => b.Categorie)
+                .Include(b => b.LivreAuteurs)
+                    .ThenInclude(ba => ba.Auteur)
+                .AsQueryable();
+
+            //  Filtres
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                livres = livres.Where(b => b.Titre.Contains(searchString));
+            }
+
+            if (!string.IsNullOrEmpty(categoryFilter))
+            {
+                livres = livres.Where(b => b.Categorie.Nom == categoryFilter);
+            }
+
+            if (!string.IsNullOrEmpty(authorFilter))
+            {
+                livres = livres.Where(b => b.LivreAuteurs.Any(ba => ba.Auteur.Nom.Contains(authorFilter)));
+            }
+
+            // Tri
+            ViewBag.CodeSortParam = string.IsNullOrEmpty(sortOrder) ? "code_desc" : "";
+            ViewBag.TitleSortParam = sortOrder == "Title" ? "title_desc" : "Title";
+
+            livres = sortOrder switch
+            {
+                "code_desc" => livres.OrderByDescending(b => b.CodeUnique),
+                "Title" => livres.OrderBy(b => b.Titre),
+                "title_desc" => livres.OrderByDescending(b => b.Titre),
+                _ => livres.OrderBy(b => b.CodeUnique),
+            };
+
+            
+
+            return View(await livres.ToListAsync());
         }
+
 
         // GET: Livres/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -48,7 +86,8 @@ namespace Lipajoli.Controllers
         // GET: Livres/Create
         public IActionResult Create()
         {
-            ViewData["CategorieId"] = new SelectList(_context.Categories, "Id", "Id");
+            var categories = _context.Categories.ToList();
+            ViewBag.Categories = new SelectList(categories, "Id", "Nom");
             return View();
         }
 
@@ -57,17 +96,22 @@ namespace Lipajoli.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CodeUnique,ISBN10,ISBN13,Titre,CategorieId,Quantite,Prix")] Livre livre)
+        
+        public async Task<IActionResult> Create(Livre livre)
         {
             if (ModelState.IsValid)
             {
+                livre.CodeUnique= await _generateurCode.GenererCodeAsync(livre.CategorieId);
+
                 _context.Add(livre);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategorieId"] = new SelectList(_context.Categories, "Id", "Id", livre.CategorieId);
+
+            PopulateCategoriesDropDownList(livre.CategorieId);
             return View(livre);
         }
+
 
         // GET: Livres/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -159,6 +203,15 @@ namespace Lipajoli.Controllers
         private bool LivreExists(int id)
         {
             return _context.Livres.Any(e => e.Id == id);
+        }
+
+        private void PopulateCategoriesDropDownList(object selectedCategoryId =null)
+        {
+            var categories = _context.Categories
+                .OrderBy(c => c.Nom)
+                .ToList();
+
+            ViewBag.CategoryId = new SelectList(categories, "Id", "Nom", selectedCategoryId);
         }
     }
 }

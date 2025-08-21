@@ -1,71 +1,53 @@
 ﻿@model IEnumerable<Lipajoli.Models.Livre>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Liste des livres";
 }
 
-<h1>Index</h1>
+<h2>Liste des livres</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Ajouter un nouveau livre</a>
 </p>
-<table class="table">
+<form method="get" asp-action="Index">
+    <input type="text" name="searchString" placeholder="Titre..." />
+    <input type="text" name="authorFilter" placeholder="Auteur..." />
+    <input type="text" name="categoryFilter" placeholder="Catégorie..." />
+    <button type="submit">Rechercher</button>
+</form>
+
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.CodeUnique)
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.CodeSortParam">Code</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ISBN10)
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.TitleSortParam">Titre</a>
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ISBN13)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Titre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Categorie)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantite)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Prix)
-            </th>
-            <th></th>
+            <th>Auteurs</th>
+            <th>Catégorie</th>
+            <th>Quantité</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CodeUnique)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ISBN10)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ISBN13)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Titre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categorie.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantite)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Prix)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var livre in Model)
+        {
+            <tr>
+                <td>@livre.CodeUnique</td>
+                <td>@livre.Titre</td>
+                <td>
+                    @string.Join(", ", livre.LivreAuteurs.Select(ba => ba.Auteur.Nom))
+                </td>
+                <td>@livre.Categorie?.Nom</td>
+                <td>@livre.Quantite</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@livre.Id">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@livre.Id">Modifier</a> |
+                    <a asp-action="Delete" asp-route-id="@livre.Id">Supprimer</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

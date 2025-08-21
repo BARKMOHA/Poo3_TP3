@@ -9,9 +9,9 @@ namespace Lipajoli.Data
             {
                 if (context.Livres.Any()) return;
 
-            var lit = context.Categories.First(c => c.Code == "LIT");
-            var sci = context.Categories.First(c => c.Code == "SCI");
-            var inf = context.Categories.First(c => c.Code == "INF");
+            var lit = context.Categories.First(c => c.Nom.StartsWith("Lit", StringComparison.OrdinalIgnoreCase));
+            var sci = context.Categories.First(c => c.Nom.StartsWith("Sci", StringComparison.OrdinalIgnoreCase));
+            var inf = context.Categories.First(c => c.Nom.StartsWith("Inf", StringComparison.OrdinalIgnoreCase));
             var livres = new List<Livre>
             {
             new Livre
