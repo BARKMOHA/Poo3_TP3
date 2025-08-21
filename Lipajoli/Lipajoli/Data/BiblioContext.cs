@@ -11,6 +11,9 @@ namespace Lipajoli.Data
         public DbSet<Auteur> Auteurs { get; set; }
         public DbSet<CategorieLivre> Categories { get; set; }
         public DbSet<LivreAuteur> LivreAuteurs { get; set; }
+        public DbSet<Usager> Usagers { get; set; }
+        public DbSet<Emprunt> Emprunts { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

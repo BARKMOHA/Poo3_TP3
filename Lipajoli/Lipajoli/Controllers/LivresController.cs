@@ -50,15 +50,24 @@ namespace Lipajoli.Controllers
             ViewBag.CodeSortParam = string.IsNullOrEmpty(sortOrder) ? "code_desc" : "";
             ViewBag.TitleSortParam = sortOrder == "Title" ? "title_desc" : "Title";
 
-            livres = sortOrder switch
+            switch (sortOrder)
             {
-                "code_desc" => livres.OrderByDescending(b => b.CodeUnique),
-                "Title" => livres.OrderBy(b => b.Titre),
-                "title_desc" => livres.OrderByDescending(b => b.Titre),
-                _ => livres.OrderBy(b => b.CodeUnique),
-            };
+                case "code_desc":
+                    livres = livres.OrderByDescending(b => b.CodeUnique);
+                    break;
 
-            
+                case "Title":
+                    livres = livres.OrderBy(b => b.Titre);
+                    break;
+
+                case "title_desc":
+                    livres = livres.OrderByDescending(b => b.Titre);
+                    break;
+
+                default:
+                    livres = livres.OrderBy(b => b.CodeUnique);
+                    break;
+            }
 
             return View(await livres.ToListAsync());
         }
