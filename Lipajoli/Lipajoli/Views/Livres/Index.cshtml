@@ -9,12 +9,14 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Ajouter un nouveau livre</a>
 </p>
-<form method="get" asp-action="Index">
-    <input type="text" name="searchString" placeholder="Titre..." />
-    <input type="text" name="authorFilter" placeholder="Auteur..." />
-    <input type="text" name="categoryFilter" placeholder="Catégorie..." />
-    <button type="submit">Rechercher</button>
+<form asp-action="Index" method="get">
+    <div class="form-group">
+        <input type="text" name="searchTerm" value="@ViewData["CurrentFilter"]" class="form-control" placeholder="Rechercher par titre, auteur ou catégorie" />
+
+    </div>
+    <button type="submit" class="btn btn-primary">Rechercher</button>
 </form>
+
 
 <table class="table table-striped">
     <thead>

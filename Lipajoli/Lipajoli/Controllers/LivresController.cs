@@ -22,7 +22,7 @@ namespace Lipajoli.Controllers
         }
 
         // GET: Livres
-        public async Task<IActionResult> Index(string searchString, string categoryFilter, string authorFilter, string sortOrder)
+        public async Task<IActionResult> Index(string searchTerm, string sortOrder)
         {
             var livres = _context.Livres
                 .Include(b => b.Categorie)
@@ -30,20 +30,15 @@ namespace Lipajoli.Controllers
                     .ThenInclude(ba => ba.Auteur)
                 .AsQueryable();
 
-            //  Filtres
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                livres = livres.Where(b => b.Titre.Contains(searchString));
-            }
+            //  Filtre
+            ViewData["CurrentFilter"] = searchTerm;
 
-            if (!string.IsNullOrEmpty(categoryFilter))
+            if (!string.IsNullOrWhiteSpace(searchTerm))
             {
-                livres = livres.Where(b => b.Categorie.Nom == categoryFilter);
-            }
-
-            if (!string.IsNullOrEmpty(authorFilter))
-            {
-                livres = livres.Where(b => b.LivreAuteurs.Any(ba => ba.Auteur.Nom.Contains(authorFilter)));
+                livres = livres.Where(l =>
+                    l.Titre.Contains(searchTerm) ||
+                    l.Categorie.Nom.Contains(searchTerm) ||
+                    l.LivreAuteurs.Any(la => la.Auteur.Nom.Contains(searchTerm)));
             }
 
             // Tri
