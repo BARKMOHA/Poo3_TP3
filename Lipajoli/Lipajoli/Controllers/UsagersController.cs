@@ -42,7 +42,9 @@ namespace Lipajoli.Controllers
             }
 
             var usager = await _context.Usagers
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(u => u.Emprunts)
+                .ThenInclude(e => e.Livre)
+                .FirstOrDefaultAsync(u => u.Id == id);
             if (usager == null)
             {
                 return NotFound();

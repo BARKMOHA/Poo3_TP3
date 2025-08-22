@@ -24,7 +24,7 @@ namespace Lipajoli.Models
 
         public int Defaillance { get; set; } = 0;
 
-        public List<Emprunt>? Emprunts { get; set; }
+        public ICollection<Emprunt>? Emprunts { get; set; }
     }
     
 }
