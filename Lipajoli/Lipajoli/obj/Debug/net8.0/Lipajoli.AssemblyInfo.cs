@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Lipajoli")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b31d05bc2bd5fe4190d7f1b95edc643a6eb448b3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+469ff2f48eeaf63e9a21a8c33f0f9dc9785b17e8")]
 [assembly: System.Reflection.AssemblyProductAttribute("Lipajoli")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Lipajoli")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

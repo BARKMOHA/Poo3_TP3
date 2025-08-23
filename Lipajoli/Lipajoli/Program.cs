@@ -20,46 +20,63 @@ builder.Services.AddScoped<IGenerateurCodeLivre, GenerateurCodeLivreService>();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    var context = services.GetRequiredService<BiblioContext>();
-    var config = services.GetRequiredService<IConfiguration>();
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+        var context = services.GetRequiredService<BiblioContext>();
+        var config = services.GetRequiredService<IConfiguration>();
 
-    // Charger les données de configuration
-    var categories = config.GetSection("LibraryData:Categories").Get<List<CategorieLivre>>();
-    var auteurs = config.GetSection("LibraryData:Auteurs").Get<List<Auteur>>();
+        // Charger les données de configuration
+        var categories = config.GetSection("LibraryData:Categories").Get<List<CategorieLivre>>();
+        var auteurs = config.GetSection("LibraryData:Auteurs").Get<List<Auteur>>();
 
-    if (!context.Categories.Any())
-        context.Categories.AddRange(categories);
+        if (categories != null)
+        {
+            foreach (var cat in categories)
+            {
+                if (!context.Categories.Any(c => c.Nom == cat.Nom))
+                {
+                    context.Categories.Add(cat);
+                }
+            }
+            context.SaveChanges();
+        }
+        if (auteurs != null)
+        {
+            foreach (var auteur in auteurs)
+            {
+                if (!context.Auteurs.Any(a => a.Nom == auteur.Nom))
+                {
+                    context.Auteurs.Add(auteur);
+                }
+            }
+            context.SaveChanges();
+        }
+        context.SaveChanges();
 
-    if (!context.Auteurs.Any())
-        context.Auteurs.AddRange(auteurs);
+        // Initialiser uniquement les livres (voir ci-dessous)
+        DbInitializer.Initialize(context);
 
-    context.SaveChanges();
+    }
 
-    // Initialiser uniquement les livres (voir ci-dessous)
-    DbInitializer.Initialize(context);
-}
+    // Configure the HTTP request pipeline.
+    if (!app.Environment.IsDevelopment())
+    {
+        app.UseExceptionHandler("/Home/Error");
+        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+        app.UseHsts();
+    }
 
+    app.UseHttpsRedirection();
+    app.UseStaticFiles();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+    app.UseRouting();
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
+    app.UseAuthorization();
 
-app.UseRouting();
+    app.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.UseAuthorization();
+    app.Run();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.Run();
