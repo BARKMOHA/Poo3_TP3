@@ -130,7 +130,7 @@ namespace Lipajoli.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategorieId"] = new SelectList(_context.Categories, "Id", "Id", livre.CategorieId);
+            ViewData["CategorieId"] = new SelectList(_context.Categories, "Id", "Nom", livre.CategorieId);
             return View(livre);
         }
 

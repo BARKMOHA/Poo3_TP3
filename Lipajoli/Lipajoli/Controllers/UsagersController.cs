@@ -80,6 +80,8 @@ namespace Lipajoli.Controllers
         // GET: Usagers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.Statuts = new SelectList(Enum.GetValues(typeof(StatutUsager)));
+
             if (id == null)
             {
                 return NotFound();

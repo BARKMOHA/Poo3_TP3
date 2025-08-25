@@ -12,7 +12,7 @@ namespace Lipajoli.Models
         public string? ISBN10 { get; set; }
 
         [Required(ErrorMessage = "Le numéro ISBN10 est obligatoire.")]
-        [StringLength(10, ErrorMessage = "ISBN13 doit avoir 13 caractères.")]
+        [StringLength(13, ErrorMessage = "ISBN13 doit avoir 13 caractères.")]
         public string? ISBN13 { get; set; }
 
         [Required(ErrorMessage = "Le titre est obligatoire.")]
